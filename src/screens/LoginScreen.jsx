@@ -1,7 +1,7 @@
 import {React, useRef, useState, useContext} from 'react';
 import { json, useNavigate } from 'react-router-dom';
 import {AuthContext} from '../contexts/AuthContext';  //utiliser des accolades avec les contextes parce que sinon ça plante grave sa mère
-
+import { setCookie, deleteCookie } from '../helpers/cookieHelper';
 
 
 const LoginScreen = () => {
@@ -50,13 +50,15 @@ const LoginScreen = () => {
         .then(json => 
             {console.log(json);
             if(json){
-                setAuth({role : +json.role});
-                document.cookie = `blog=${json.token};max-age=${60*60*24}`; //stocke le token et sa durée de vie maximum (24h) comme un cookie
+                setAuth({role : +json.role, id: +json.id});
+                // document.cookie = `blog=${json.token};max-age=${60*60*24}`; //stocke le token et sa durée de vie maximum (24h) comme un cookie //remplacee par setCookie
+                setCookie("blog", json.token, {"max-age": 60*60*24})
                 navigate('/account');
             }
             else{
-                setAuth({role : 0});
-                document.cookie = `blog=null;max-age=0;` ; //stocke dans un cookie une information qui pourra être interprétée par l'API comme correspondant à un individu non connecté
+                setAuth({role : 0, id: 0});
+                // document.cookie = `blog=null;max-age=0;` ; //stocke dans un cookie une information qui pourra être interprétée par l'API comme correspondant à un individu non connecté //remplacee par deleteCookie()
+                deleteCookie("blog");
             }
         });
    

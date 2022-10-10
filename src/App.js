@@ -9,6 +9,7 @@ import AccountScreen from './screens/AccountScreen';
 import AdminScreen from './screens/AdminScreen';
 import { useContext } from 'react';
 import {AuthContext} from './contexts/AuthContext';
+import { deleteCookie } from './helpers/cookieHelper';
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
 
 
         <BrowserRouter>
-        <navbar className='d-flex w-100 justify-content-center my-3'>
+        <div className='d-flex w-100 justify-content-center my-3'>
 
           <Link to='/' className='btn btn-primary mx-3'>Home</Link>
           {auth.role === 0 &&
@@ -31,7 +32,14 @@ function App() {
           <Link to='/logged' className='btn btn-primary mx-3'>Logged</Link>}
           {auth.role > 0 && 
             <Link  to='/account' className='btn btn-primary mx-3'>Account</Link>}
-      </navbar>
+          {auth.role > 0 && 
+            <button className='btn btn-sm btn-danger mx-3' onClick={e => {
+              setAuth({role : 0, id : 0});
+              deleteCookie('blog');
+              window.location.href = '/login'
+            }}>LOGOUT</button>}
+          
+      </div>
           <Routes>
             <Route path='/' element={<HomeScreen/>}></Route>
             {auth.role === 0 &&
