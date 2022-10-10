@@ -1,6 +1,12 @@
-import {React, useRef, useState} from 'react';
+import {React, useRef, useState, useContext} from 'react';
+import { json, useNavigate } from 'react-router-dom';
+import {AuthContext} from '../contexts/AuthContext';  //utiliser des accolades avec les contextes parce que sinon ça plante grave sa mère
+
+
 
 const LoginScreen = () => {
+    const {setAuth} = useContext(AuthContext);
+    const navigate = useNavigate();
     const emailRef = useRef(null);
     const passwordRef = useRef(null);
     const formRef = useRef(null);
@@ -41,7 +47,18 @@ const LoginScreen = () => {
         const jsonData = JSON.stringify(formData);
         fetch('http://blog.api/login' , {method: "POST", body : jsonData})
         .then(resp => resp.json())
-        .then(json => console.log(json))
+        .then(json => 
+            {console.log(json);
+            if(json){
+                setAuth({role : +json.role});
+                navigate('/account');
+            }
+            else{
+                setAuth({role : 0});
+            }
+        });
+   
+        
 
     }
 

@@ -7,9 +7,12 @@ import LoginScreen from './screens/LoginScreen';
 import LoggedScreen from './screens/LoggedScreen';
 import AccountScreen from './screens/AccountScreen';
 import AdminScreen from './screens/AdminScreen';
+import { useContext } from 'react';
+import {AuthContext} from './contexts/AuthContext';
+
 
 function App() {
-  
+  const {auth} = useContext(AuthContext); //
 
 
   return (
@@ -18,18 +21,26 @@ function App() {
 
         <BrowserRouter>
         <navbar className='d-flex w-100 justify-content-center my-3'>
+
           <Link to='/' className='btn btn-primary mx-3'>Home</Link>
-          <Link to='/login' className='btn btn-primary mx-3'>Login</Link>
-          <Link to='/admin' className='btn btn-primary mx-3'>Admin</Link>
-          <Link to='/logged' className='btn btn-primary mx-3'>Logged</Link>
-          <Link  to='/account' className='btn btn-primary mx-3'>Account</Link>
+          {auth.role === 0 &&
+            <Link to='/login' className='btn btn-primary mx-3'>Login</Link>}
+          {auth.role === 1 && 
+          <Link to='/admin' className='btn btn-primary mx-3'>Admin</Link>}
+          {auth.role > 0 &&
+          <Link to='/logged' className='btn btn-primary mx-3'>Logged</Link>}
+          {auth.role > 0 && 
+            <Link  to='/account' className='btn btn-primary mx-3'>Account</Link>}
       </navbar>
           <Routes>
             <Route path='/' element={<HomeScreen/>}></Route>
-            <Route path='/login' element={<LoginScreen/>}></Route>
-            <Route path='/admin' element={<AdminScreen/>}></Route>
-            <Route path='/logged' element={<LoggedScreen/>}></Route>
-            <Route path='/account' element={<AccountScreen/>}></Route>
+            {auth.role === 0 &&
+              <Route path='/login' element={<LoginScreen/>}></Route>}
+            {auth.role === 1 && <Route path='/admin' element={<AdminScreen/>}></Route>}
+            {auth.role > 0 &&
+              <Route path='/logged' element={<LoggedScreen/>}></Route>}
+            {auth.role > 0 &&
+              <Route path='/account' element={<AccountScreen/>}></Route>}
           </Routes>
         </BrowserRouter>
     </div>
