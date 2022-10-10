@@ -51,10 +51,12 @@ const LoginScreen = () => {
             {console.log(json);
             if(json){
                 setAuth({role : +json.role});
+                document.cookie = `blog=${json.token};max-age=${60*60*24}`; //stocke le token et sa durée de vie maximum (24h) comme un cookie
                 navigate('/account');
             }
             else{
                 setAuth({role : 0});
+                document.cookie = `blog=null;max-age=0;` ; //stocke dans un cookie une information qui pourra être interprétée par l'API comme correspondant à un individu non connecté
             }
         });
    
