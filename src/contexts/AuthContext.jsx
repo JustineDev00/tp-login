@@ -11,7 +11,7 @@ const AuthProvider = ({children}) => {   //génération de l'élément JSX AuthC
     // const getCookieValue = (name) => {
     //     return document.cookie.match("(^|;)\\s*" + name + "\\s*=\\s*([^;]+)")?.pop() || "";
     // } //remplacee par la méthode importée getCookie
-    const [auth, setAuth] = useState({role :0});  //constante d'état qui prend comme valeur initiale un objet à une propriété (role) dont la valeur est 0
+    const [auth, setAuth] = useState({role :0, id:0});  //constante d'état qui prend comme valeur initiale un objet à une propriété (role) dont la valeur est 0
     //--> changement de auth : changement de value de AuthProvider : changement de comportement/d'affichage/etc des children
     useEffect(() => {
         fetch("http://blog.api/login/check", {

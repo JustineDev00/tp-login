@@ -14,7 +14,7 @@ import { deleteCookie } from './helpers/cookieHelper';
 
 function App() {
   const {auth} = useContext(AuthContext); //
-
+  const {setAuth} = useContext(AuthContext);
 
   return (
     <div className="App container container-fluid">
