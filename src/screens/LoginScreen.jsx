@@ -1,7 +1,8 @@
 import {React, useRef, useState, useContext} from 'react';
-import { json, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import {AuthContext} from '../contexts/AuthContext';  //utiliser des accolades avec les contextes parce que sinon ça plante grave sa mère
 import { setCookie, deleteCookie } from '../helpers/cookieHelper';
+import doFetch from '../helpers/fetchHelper';
 
 
 const LoginScreen = () => {
@@ -38,29 +39,22 @@ const LoginScreen = () => {
     
 
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = Object.fromEntries(new FormData(e.target));   //crée un objet à partir des entrées de l'objet FormData qui récupère les données de la cible de l'event, ici un form (sous la forme de paires clés/valeurs si les inputs ont bien un nom)
-        console.log(
-            formData
-        );
+      
         const jsonData = JSON.stringify(formData);
-        fetch('http://blog.api/login' , {method: "POST", body : jsonData})
-        .then(resp => resp.json())
-        .then(json => 
-            {console.log(json);
-            if(json){
-                setAuth({role : +json.role, id: +json.id});
-                // document.cookie = `blog=${json.token};max-age=${60*60*24}`; //stocke le token et sa durée de vie maximum (24h) comme un cookie //remplacee par setCookie
-                setCookie("blog", json.token, {"max-age": 60*60*24})
-                navigate('/account');
-            }
-            else{
-                setAuth({role : 0, id: 0});
-                // document.cookie = `blog=null;max-age=0;` ; //stocke dans un cookie une information qui pourra être interprétée par l'API comme correspondant à un individu non connecté //remplacee par deleteCookie()
-                deleteCookie("blog");
-            }
-        });
+        console.log(jsonData);
+        const {data} = await doFetch("login", {method: "POST", body : jsonData});
+        if(data.result){
+            setAuth({role : +data.role, id: +data.id});
+            setCookie("blog", data.token, {"max-age" : 60*60*24});
+            navigate('/account');
+        }
+        else{
+            setAuth({role : 0, id: 0});
+            deleteCookie();
+        }
    
         
 

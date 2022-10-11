@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { json } from "react-router-dom";
 import { deleteCookie, getCookie } from "../helpers/cookieHelper";
+import doFetch from "../helpers/fetchHelper";
 
 const AuthContext = createContext();  
 //initialisation d'un Context, qui va essentiellement servir à passer des valeurs (qui peuvent être des variables de type primitif, des objets, des fonctions...) d'un parent à toute sa "descendance" : enfants directs mais aussi petits-enfants, arrière-petits enfants. La transmission se fait grâce à AuthContext.Provider ("Provider" dans le sens de fournisseur de valeur)
@@ -14,22 +15,18 @@ const AuthProvider = ({children}) => {   //génération de l'élément JSX AuthC
     const [auth, setAuth] = useState({role :0, id:0});  //constante d'état qui prend comme valeur initiale un objet à une propriété (role) dont la valeur est 0
     //--> changement de auth : changement de value de AuthProvider : changement de comportement/d'affichage/etc des children
     useEffect(() => {
-        fetch("http://blog.api/login/check", {
-            credentials : "include",
-            headers : {
-                "Authorization" : getCookie("blog"),
-            }
-        })
-        .then((resp) => resp.json())
-        .then((json) => {
-            if(json.result){
-                setAuth({role: +json.role, id: +json.id});
+            const check = async() => {
+                const {data} = await doFetch("login/check");
+            
+            if(data.result){
+                setAuth({role: +data.role, id: +data.id});
             }
             else{
                 setAuth({role: 0, id: 0});
                 deleteCookie("blog");
             }
-        });
+        }
+        check();
     }, []);
     
     

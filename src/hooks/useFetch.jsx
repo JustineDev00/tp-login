@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getCookie } from '../helpers/cookieHelper';
+
 //useFetch est un hook custom qui permet de faire des requêtes à la BDD pour le maintien de la connexion;
 const useFetch = (endpoint, options = {}) => {
     const [loading, setLoading] = useState(true);
@@ -9,11 +9,11 @@ const useFetch = (endpoint, options = {}) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const url = "http://blog.api/" + endpoint;
+            const url = "http://localhost:80/blog-api/" + endpoint;
             options.credentials = "include";
-            options.headers = {
-                Authorization: getCookie("blog"),
-            };
+            // options.headers = {
+            //     Authorization: getCookie("blog"),  //plus besoin d'autorisation car les cookies sont transmis directements à l'API via $_COOKIE
+            // };
             try {
                 const resp = await fetch(url, options);
                 const textValue = await resp.text();
