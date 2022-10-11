@@ -28,6 +28,7 @@ function App() {
             <Link to='/login' className='btn btn-primary mx-3'>Login</Link>}
           {auth.role === 1 && 
           <Link to='/admin' className='btn btn-primary mx-3'>Admin</Link>}
+         
           {auth.role > 0 &&
           <Link to='/logged' className='btn btn-primary mx-3'>Logged</Link>}
           {auth.role > 0 && 
@@ -44,6 +45,7 @@ function App() {
             <Route path='/' element={<HomeScreen/>}></Route>
             {auth.role === 0 &&
               <Route path='/login' element={<LoginScreen/>}></Route>}
+              
             {auth.role === 1 && <Route path='/admin' element={<AdminScreen/>}></Route>}
             {auth.role > 0 &&
               <Route path='/logged' element={<LoggedScreen/>}></Route>}
