@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import useFetch from '../hooks/useFetch';
 
 
+
 function AccountValidateScreen() {
     const token = useParams('token');
     console.log(token);
@@ -20,7 +21,11 @@ function AccountValidateScreen() {
         return(
             <>
             <h1>Validation du compte</h1>
-            <p>Token : {data}</p>
+           {data.result? 
+           <p>pseudo : {data.pseudo}  <br/>  mail : {data.mail}</p>
+            : 
+           
+           <p>"Une erreur est survenue, veuillez recommencer votre inscription SVP"</p>}
             </>
             
         ); 
