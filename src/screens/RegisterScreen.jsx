@@ -1,10 +1,11 @@
-import React from "react";
+import {React, useState} from "react";
 import { useForm } from 'react-hook-form';
 import doFetch from "../helpers/fetchHelper";
 
 
 
 export default function RegisterScreen() {
+    const [msg, setMsg] = useState(null);
     const { register, handleSubmit, formState: { errors } } = useForm();
     const formInvalid = () => console.log("Errors", errors);
     const formSubmit = async (data) => {       //data == les données du formulaire sous la forme d'un objet où clé = nom du champ et valeur = valeur du champ
@@ -12,8 +13,12 @@ export default function RegisterScreen() {
         const APIAnswer = await doFetch("login/register",{method : "POST", body : JSON.stringify(data)} );
         //!! attention à ne pas oublier la méthode et le corps dans l'appel de doFetch//
         
-        console.log("Received data:", APIAnswer.data);
+        console.log("Received info:", APIAnswer.data.message);
+        setMsg(APIAnswer.data.message);
+
     }
+
+    
     return (
         <>
             <h1>Register</h1>
@@ -34,7 +39,7 @@ export default function RegisterScreen() {
                 </div>
                 <button type='submit' className="btn btn-primary">Submit</button>
             </form>
-            <div className="text-primary">"msg variable will go there at some point"</div>
+            <div className="text-primary">{msg}</div>
         </>
     );
 }
