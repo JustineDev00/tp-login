@@ -22,24 +22,27 @@ export default function RegisterScreen() {
     return (
         <>
             <h1>Register</h1>
-
+            
             <form noValidate className="w-50" onSubmit={handleSubmit(formSubmit, formInvalid)}>
-                <div className='mb-3 d-flex flex-column justify-content-start'>
+                <div className='mb-3 d-flex flex-column align-items-start'>
                     <label htmlFor="pseudo-input" className='form-label'>Pseudo <i className={'text-danger'}>{errors.pseudo ? " *" : " "}</i></label>
 
                     <input id="pseudo-input" type='text' placeholder="pseudo" className="form-control" {...register("pseudo", { required: true, minLength: 3 })} />
                     <i className={"text-danger d-block"}>{errors.pseudo ? "* at least 3 chars" : ""}</i>
                 </div>
-                <div>
+                <div className='mb-3 d-flex flex-column align-items-start'>
                     <label htmlFor="email-input" className="form-label">
                      Email <i className={"text-danger"}>{errors.email ?  " *" : ""}</i>   
                     </label>
                     <input id="email-input" type="email" placeholder="email" className="form-control" {...register("email", {required: true, pattern: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i })}/>
                     <i className={"text-danger d-block"}>{errors.email ? "* must be a valid email address" : ""}</i>
+                    <button type='submit' className="btn btn-primary mt-3">Submit</button>
+                    <div className="text-primary">{msg}</div>
                 </div>
-                <button type='submit' className="btn btn-primary">Submit</button>
+                
             </form>
-            <div className="text-primary">{msg}</div>
+            
+            
         </>
     );
 }
