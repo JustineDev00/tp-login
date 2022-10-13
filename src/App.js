@@ -11,6 +11,7 @@ import { useContext } from 'react';
 import { AuthContext } from './contexts/AuthContext';
 import { deleteCookie } from './helpers/cookieHelper';
 import RegisterScreen from './screens/RegisterScreen';
+import AccountValidateScreen from './screens/AccountValidateScreen';
 
 
 function App() {
@@ -49,6 +50,8 @@ function App() {
             <Route path='/login' element={<LoginScreen />}></Route>}
           {auth.role === 0 &&
             <Route path='/register' element={<RegisterScreen />}></Route>}
+             {auth.role === 0 &&
+            <Route path='/account/validate/:token' element={<AccountValidateScreen/>}></Route>}
           {auth.role === 1 && <Route path='/admin' element={<AdminScreen />}></Route>}
           {auth.role > 0 &&
             <Route path='/logged' element={<LoggedScreen />}></Route>}
