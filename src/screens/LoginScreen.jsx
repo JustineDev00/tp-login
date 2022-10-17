@@ -44,7 +44,7 @@ const LoginScreen = () => {
         const formData = Object.fromEntries(new FormData(e.target));   //crée un objet à partir des entrées de l'objet FormData qui récupère les données de la cible de l'event, ici un form (sous la forme de paires clés/valeurs si les inputs ont bien un nom)
       
         const jsonData = JSON.stringify(formData);
-        console.log(jsonData);
+        
         const {data} = await doFetch("login", {method: "POST", body : jsonData});
         if(data.result){
             setAuth({role : +data.role, id: +data.id});

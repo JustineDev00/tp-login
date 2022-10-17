@@ -2,7 +2,7 @@ import React from 'react';
 import useFetch from '../hooks/useFetch';
 
 const HomeScreen = () => {
-    const { data, loading, error, text } = useFetch("theme");  //utilisation de useFetch pour 
+    const { data, loading, error, text } = useFetch("theme");  //utilisation de useFetch pour chercher la liste des thèmes
     if (loading) return <div>Loading ...</div>
     if (error) {
         console.log(error, text);
