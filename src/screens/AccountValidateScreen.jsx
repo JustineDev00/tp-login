@@ -52,7 +52,7 @@ function AccountValidateScreen() {
            {data.result? 
            <>
             <form noValidate className='w-50' onSubmit={handleSubmit(formSubmit, formInvalid)}>
-                <div className="mb-3 d-flex flex-column align-items start">
+                <div className="mb-3 d-flex flex-column align-items-start">
                     <label htmlFor='password-input' className='form-label'>Mot de passe:</label>
                     <input id='password-input' type= 'password' className = "form-control" placeholder='type password here' {...register("password", {required : true, minLength : 6, pattern : {value : /^[a-zA-Z]*[A-Z]+[a-zA-Z]+[0-9]*$/g, message : 'at least one uppercase letter'}})}></input>
                 </div>

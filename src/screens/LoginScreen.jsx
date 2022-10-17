@@ -1,5 +1,5 @@
 import {React, useRef, useState, useContext} from 'react';
-import {useNavigate } from 'react-router-dom';
+import {useNavigate, Link } from 'react-router-dom';
 import {AuthContext} from '../contexts/AuthContext';  //utiliser des accolades avec les contextes parce que sinon ça plante grave sa mère
 import { setCookie, deleteCookie } from '../helpers/cookieHelper';
 import doFetch from '../helpers/fetchHelper';
@@ -76,7 +76,7 @@ const LoginScreen = () => {
                     <input type="submit" value="Submit" className='btn btn-primary mt-3' disabled={!isValid}/>
                 </div>
             </form>
-
+            <Link to='/forgottenpassword'>Mot de passe oublié?</Link>
 
         </div>
     );

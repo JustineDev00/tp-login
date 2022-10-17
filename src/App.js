@@ -12,6 +12,8 @@ import { AuthContext } from './contexts/AuthContext';
 import { deleteCookie } from './helpers/cookieHelper';
 import RegisterScreen from './screens/RegisterScreen';
 import AccountValidateScreen from './screens/AccountValidateScreen';
+import ForgottenPasswordScreen from './screens/ForgottenPasswordScreen';
+import ChangePasswordScreen from './screens/ChangePasswordScreen';
 
 
 function App() {
@@ -49,9 +51,13 @@ function App() {
           {auth.role === 0 &&
             <Route path='/login' element={<LoginScreen />}></Route>}
           {auth.role === 0 &&
+            <Route path='/forgottenpassword' element={<ForgottenPasswordScreen/>}></Route>}
+                    {auth.role === 0 &&
+            <Route path='/changePassword/:token' element={<ChangePasswordScreen/>}></Route>}
+          {auth.role === 0 &&
             <Route path='/register' element={<RegisterScreen />}></Route>}
-             {auth.role === 0 &&
-            <Route path='/account/validate/:token' element={<AccountValidateScreen/>}></Route>}
+          {auth.role === 0 &&
+            <Route path='/account/validate/:token' element={<AccountValidateScreen />}></Route>}
           {auth.role === 1 && <Route path='/admin' element={<AdminScreen />}></Route>}
           {auth.role > 0 &&
             <Route path='/logged' element={<LoggedScreen />}></Route>}
